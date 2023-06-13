@@ -15,7 +15,7 @@ The scripts in this repository have been adapted from the original scripts writt
 Markdowns have as a default the working directories of the place where the markdown is saved.  Make sure you keep and follow the folder structure to avoid issues with working directories.    
 
 # Notes on the scripts   
-- geospatial_extraction_with_comids_VGC: Pulls data from NHD, StreamCat< PRISM and other sources. **Note you MUST have correct and QAQC COMIDs for this step** 
+- geospatial_extraction_with_comids_VGC: Pulls data from NHD, StreamCat, PRISM and other sources. **Note you MUST have correct and QAQC COMIDs for this step** 
 
 For RC-SFA QAQC COMIDs, download the Data Package from ESS-DIVE located [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251).
 - geospatial_workflow_check_comids: Provides a workflow that allows you to plot,check and rectify COMIDs based on the site coordinates.    
