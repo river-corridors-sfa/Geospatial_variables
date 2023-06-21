@@ -10,7 +10,9 @@ The Geospatial data generated for the RC-SFA (see Geospatial_data_RCSFA_06-21-20
 3- The COMID for the site was flagged as a NHDPlusV2 non-network dataset. See ESS-DIVE data package [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251) for details.     
 
 
-**Note**: COMIDs have been removed from the Geospatial outputs, if you need COMIDs, download the ESS-DIVE data package here [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251).
+**Note**: COMIDs have been removed from the Geospatial outputs, if you need COMIDs, download the ESS-DIVE data package here [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251).         
+
+**Note**: A readme of the NHD exported variables can be found [here](https://edap-ow-data-commons.s3.amazonaws.com/NHDPlusV21/Data/NationalData/0Release_Notes_NationalData_Seamless_GeoDatabase.pdf). A readme for the StreamCat exported variables can be found [here](https://www.epa.gov/national-aquatic-resource-surveys/streamcat-metrics-and-definitions).
 
 
 # Notes for running the script. 
@@ -26,7 +28,7 @@ The Geospatial data generated for the RC-SFA (see Geospatial_data_RCSFA_06-21-20
 ## General Note
 Markdowns have as a default the working directories of the place where the markdown is saved.  Make sure you keep and follow the folder structure to avoid issues with working directories.    
 
-##  Notes on the scripts   
+##  Notes on the example scripts   
 - geospatial_extraction_with_comids_VGC: Pulls data from NHD, StreamCat, PRISM and other sources. **Note you MUST have correct and QAQC COMIDs for this step** 
 
 For RC-SFA QAQC COMIDs, download the Data Package from ESS-DIVE located [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251).
