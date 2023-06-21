@@ -3,10 +3,10 @@
 The scripts in this repository have been adapted from the original scripts written by Katie Willi. The original scripts can be found [here](https://github.com/rossyndicate/geospatial_for_conus_waters). 
 
 # Notes on the Data. Please Read!
-The Geospatial data generated for the RC-SFA (see Geospatial_data_RCSFA_06-21-2023.csv), has been generated using v2 of the RC-SFA Geospatial Data Package on ESS-DIVE located [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251). The data package was downloaded on 06-20-2023 and data was generated on 06-21-2023. This file contains Geospatial information for all the RC-SFA sites in the Unitied States and needs to be filterd by the user based on study of interest. If your site of interest is not present in the output it could be beacuse:        
+The Geospatial data generated for the RC-SFA (see Geospatial_data_RCSFA_06-21-2023.csv), has been generated using v2 of the RC-SFA Geospatial Data Package on ESS-DIVE located [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251). The data package was downloaded on 06-20-2023 and data was generated on 06-21-2023. This file contains Geospatial information for all the RC-SFA sites in the Unitied States and needs to be filterd by the user based on study of interest. If your site of interest is not present in the output it could be because:        
 
 1- It is not in the United States.      
-2- It is a small stream and does not have COMIDs associated with it. See ESS-DIVE data package [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251).    
+2- It is a small stream and does not have COMID associated with it. See ESS-DIVE data package [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251).    
 3- The COMID for the site was flagged as a NHDPlusV2 non-network dataset. See ESS-DIVE data package [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251) for details.     
 
 
