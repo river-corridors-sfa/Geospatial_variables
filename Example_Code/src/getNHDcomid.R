@@ -14,12 +14,19 @@ getNHDcomid <- function(df = sites){
   df_points <- st_read('data/site_flowlines.gpkg', quiet = T)
   
   # st_read only has one entry for each comid which is a problem for duplicated comids
-  # Find the duplicated commids in df and add then add the extra rows
+  # Find the duplicated comids in df and add then add the extra rows
   if (nrow(df_points)!= nrow(df)){
-    print("Your data has duplicated COMIDs")
-    dupli = df$comid[duplicated(df$comid)] # find duplicated comids
-    temp.rows = df_points[which(df_points$comid %in% as.integer(dupli)),]
-  df_points = rbind(df_points,temp.rows)  
+    print("Your data has duplicate or triplicate COMIDs")
+    #dupli = df$comid[duplicated(df$comid)] # find duplicated comids. This also finds the triplicate 
+   # temp.rows = df_points[which(df_points$comid %in% as.integer(dupli)),]
+    #df_points = rbind(df_points,temp.rows)  
+    dat = NULL
+    for (i in 1:nrow(df)){
+      temp = df_points[grep(df$comid[i],df_points$comid),]
+      dat = rbind(dat,temp)
+    }
+    df_points = dat
+    df = df[which(df$comid %in% df_points$comid),]
   }
   
   coords <- vector("list", length = nrow(df_points))
