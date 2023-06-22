@@ -75,6 +75,10 @@ site_watersheds <- getWatersheds(df = sites, make_pretty = TRUE) %>%
   inner_join(., select(sf::st_drop_geometry(sites), site, comid), by = "comid")
 ```
 
+Exporting shape files 
+```{r}
+st_write(site_watersheds, dsn = "shape/", layer = "RCSFA_shp", driver = "ESRI Shapefile")
+```
 
 Map all your sites. Maps are automatically stored in the `data/maps/` folder. It is highly recommended to review each map, particularly for known locations along BIG rivers and TINY streams.Note: COMIDs should have been checked before running this code. 
 
