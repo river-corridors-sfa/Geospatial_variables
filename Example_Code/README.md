@@ -1,23 +1,3 @@
-# Geospatial_variables
-
-The scripts in this repository have been adapted from the original scripts written by Katie Willi. The original scripts can be found [here](https://github.com/rossyndicate/geospatial_for_conus_waters). 
-In addition to providing the data exported by Katie's script, here you will also find Net Primary Production (NPP) and Evapotranspiration data (ER) for the RC-SFA sites. The data was extracted using a script developed by Kristian Nelson. Net Primary Production is a mosaic of data from [here](https://e4ftl01.cr.usgs.gov/MOLT/MOD17A3HGF.061/2015.01.01/).
-Evapotranspiration came is a mosaic of data from [here](https://e4ftl01.cr.usgs.gov/MOLT/MOD16A3GF.061/2021.01.01/).    
-
-
-# Notes on the Data. Please Read!
-The Geospatial data generated for the RC-SFA (see Geospatial_data_RCSFA_2023-06-21.csv), has been generated using v2 of the RC-SFA Geospatial Data Package on ESS-DIVE located [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251). The data package was downloaded on 06-20-2023 and data was generated on 06-21-2023. This file contains Geospatial information for all the RC-SFA sites in the United States and needs to be filtered by the user based on study of interest. If your site of interest is not present in the output it could be because:        
-
-1- It is not in the United States.      
-2- It is a small stream and does not have COMID associated with it. See ESS-DIVE data package [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251).    
-3- The COMID for the site was flagged as a NHDPlusV2 non-network dataset. See ESS-DIVE data package [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251) for details.     
-
-
-**Note**: COMIDs have been removed from the Geospatial outputs, if you need COMIDs, download the ESS-DIVE data package here [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251).         
-
-**Note**: A readme of the NHD exported variables can be found [here](https://edap-ow-data-commons.s3.amazonaws.com/NHDPlusV21/Data/NationalData/0Release_Notes_NationalData_Seamless_GeoDatabase.pdf). A readme for the StreamCat exported variables can be found [here](https://www.epa.gov/national-aquatic-resource-surveys/streamcat-metrics-and-definitions).
-
-
 # Notes for running the script. 
 ## Read before you start
 1- Clone/Fork (TBD) this repository.       
