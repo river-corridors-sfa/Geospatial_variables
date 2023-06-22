@@ -24,10 +24,12 @@ At this point in time, the approach to using data extracted from the Katie Willi
 
 1- The base data (coordinates, site names, COMIDs) have been published on ESS-DIVE. This data package should be used as needed and cited when used.          
 
-2- The GitHub is designed to make it easier for people to access extracted geospatial data. There is a steward (VGC) who runs the code to extract data when the geospatial DP is updated or when another need arises. The output is put in the github with a version number corresponding to the geospatial data package version. The date in the file name corresponds to the date the code was run.         
+2- The GitHub is designed to make it easier for people to access extracted geospatial data. **There is a steward (VGC) who runs the code to extract data** when the geospatial DP is updated or when another need arises. The output is put in the github with a version number corresponding to the geospatial data package version. The date in the file name corresponds to the date the code was run.         
 
-3- If you use the extracted data, make sure to note the version number. In your analysis products, you will cite the DP and the github, including the output file with its version number and date.
-There is no need for you to run this code. You should just download the output file and subset as needed.          
+3- If you use the extracted data, make sure to note the version number. In your analysis products, you will cite the DP and the github, including the output file with its version number and date.       
 
-4- It is critical to maintain traceable provenance in your data, which is why we are directing you to go to the data package directly for COMIDs and have a steward for this specific code output.
-If you have requests, questions, or ideas for improvement, contact VGC, Brie, and Amy
+4- **There is no need for you to run this code. You should just download the output file and subset as needed.**          
+
+5- It is critical to maintain traceable provenance in your data, which is why we are directing you to go to the data package directly for COMIDs and have a steward for this specific code output.            
+
+6- If you have requests, questions, or ideas for improvement, contact VGC, Brie, and Amy
