@@ -1,5 +1,5 @@
 # Notes for running the script. 
-** VGC should be the only one running this code for the RC-SFA**   
+**VGC should be the only one running this code for the RC-SFA**   
 
 ## Read before you start
 1- Clone/Fork (TBD) this repository.       
