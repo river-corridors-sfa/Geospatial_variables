@@ -1,6 +1,9 @@
 # Geospatial_variables
 
-The scripts in this repository have been adapted from the original scripts written by Katie Willi. The original scripts can be found [here](https://github.com/rossyndicate/geospatial_for_conus_waters). 
+The scripts in this repository have been adapted from the original scripts written by Katie Willi. The original scripts can be found [here](https://github.com/rossyndicate/geospatial_for_conus_waters).   
+If you use this data for your manuscript, please cite Katie's package as followes:   
+Kathryn Willi, & Matthew R. V. Ross. (2023). Geospatial Data Puller for Waters in the Contiguous United States (Version v1). Zenodo. https://doi.org/10.5281/zenodo.8140272 
+
 In addition to providing the data exported by Katie's script, here you will also find Net Primary Production (NPP) and Evapotranspiration data (ER) for the RC-SFA sites. The data was extracted using a script developed by Kristian Nelson. Net Primary Production is a mosaic of data from [here](https://e4ftl01.cr.usgs.gov/MOLT/MOD17A3HGF.061/2015.01.01/).
 Evapotranspiration came is a mosaic of data from [here](https://e4ftl01.cr.usgs.gov/MOLT/MOD16A3GF.061/2021.01.01/).    
 
