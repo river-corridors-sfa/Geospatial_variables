@@ -19,7 +19,7 @@ The Geospatial data generated for the RC-SFA (see v2_RCSFA_Extracted_Geospatial_
 
 **Note**: COMIDs have been removed from the Geospatial outputs, if you need COMIDs, download the ESS-DIVE data package here [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251).         
 
-**Note**: **A readme defining the NHD exported variables can be found [here](https://edap-ow-data-commons.s3.amazonaws.com/NHDPlusV21/Data/NationalData/0Release_Notes_NationalData_Seamless_GeoDatabase.pdf). A readme defining the StreamCat exported variables can be found [here](https://www.epa.gov/national-aquatic-resource-surveys/streamcat-metrics-and-definitions).**
+**Note**: **A readme defining the NHD exported variables can be found [here](http://www.horizon-systems.com/NHDPlusData/NHDPlusV21/Data/NationalData/0Release_Notes_NationalData_Seamless_GeoDatabase.pdf). A readme defining the StreamCat exported variables can be found [here](https://www.epa.gov/national-aquatic-resource-surveys/streamcat-metrics-and-definitions).**
 
 
 # Instructions
