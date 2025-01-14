@@ -1,5 +1,4 @@
-# Editing the readme
-# Geospatial_variables
+# Geospatial_variables_Readme
 
 The scripts in this repository have been adapted from the original scripts written by Katie Willi. The original scripts can be found [here](https://github.com/rossyndicate/geospatial_for_conus_waters).   
 If you use this data for your manuscript, please cite Katie's package as follows:   
