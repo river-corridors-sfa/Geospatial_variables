@@ -13,37 +13,37 @@ getChemistry <- function(df = sites, sf = site_watersheds){
   point_aluminum <- terra::extract(aluminum, df, na.rm = TRUE, df = TRUE) %>%
     select(AluminumSite = 2)
       
-  ws_aluminum <- terra::extract(aluminum, sf, mean, na.rm=T, df=TRUE) %>%
+  ws_aluminum <- terra::extract(aluminum, sf, mean, na.rm=T) %>%
     select(AluminumWs = 2)
   
   point_calcium <- terra::extract(calcium, df, na.rm = TRUE, df = TRUE) %>%
     select(CalciumSite = 2)
   
-  ws_calcium <- terra::extract(calcium, sf, mean, na.rm=T, df=TRUE) %>%
+  ws_calcium <- terra::extract(calcium, sf, mean, na.rm=T) %>%
     select(CalciumWs = 2)
   
   point_copper <- terra::extract(copper, df, na.rm = TRUE, df = TRUE) %>%
     select(CopperSite = 2)
   
-  ws_copper <- terra::extract(copper, sf, mean, na.rm=T, df=TRUE) %>%
+  ws_copper <- terra::extract(copper, sf, mean, na.rm=T) %>%
     select(CopperWs = 2)
   
   point_iron <- terra::extract(iron, df, na.rm = TRUE, df = TRUE) %>%
     select(IronSite = 2)
   
-  ws_iron <- terra::extract(iron, sf, mean, na.rm=T, df=TRUE) %>%
+  ws_iron <- terra::extract(iron, sf, mean, na.rm=T) %>%
     select(IronWs = 2)
   
   point_manganese <- terra::extract(manganese, df, na.rm = TRUE, df = TRUE) %>%
     select(ManganeseSite = 2)
   
-  ws_manganese <- terra::extract(manganese, sf, mean, na.rm=T, df=TRUE) %>%
+  ws_manganese <- terra::extract(manganese, sf, mean, na.rm=T) %>%
     select(ManganeseWs = 2)
   
   point_phosph <- terra::extract(phosph, df, na.rm = TRUE, df = TRUE) %>%
     select(PhosphSite = 2)
   
-  ws_phosph <- terra::extract(phosph, sf, mean, na.rm=T, df=TRUE) %>%
+  ws_phosph <- terra::extract(phosph, sf, mean, na.rm=T) %>%
     select(PhosphWs = 2)
   
   ws <- cbind(ws_aluminum, ws_calcium, ws_copper,

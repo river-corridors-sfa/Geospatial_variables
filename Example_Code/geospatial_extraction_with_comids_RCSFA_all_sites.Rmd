@@ -48,20 +48,27 @@ Currently, this workflow requires downloading several data sets locally for much
 
 Use COMID to allow site linkages with all datasets in this workflow. 
 
-```{r}
+```{r load}
 sf_use_s2(FALSE)
 site_type = "comid" # This steps assumes you have checked your COMIDs
-sites <- read_csv("v2_RCSFA_Geospatial_Data_Package/v2_RCSFA_Geospatial_Site_Information.csv")
+sites <- read_csv("v4_RCSFA_Geospatial_Data_Package/v4_RCSFA_Geospatial_Site_Information.csv")
 
 # Filter the sites that are too small to have COMIDS or are outside of the US. Also select and change column names to match the code needs
 
 sites = sites %>% filter(COMID!=-9999) %>% dplyr::select(site = 'Site_ID', comid = 'COMID')
+
+# Remove duplicated COMID
+subset_sites <- sites %>% #remove comid duplicates (i.e., samples located in the same catchment)
+    distinct(comid,.keep_all=T)
+# changing for code compatibility
+all_sites = sites 
+sites = subset_sites
 ```
 
 
 Pull all meta data associated with each site's COMID. 
 
-```{r}
+```{r getcomid}
 if(site_type == "comid"){
   sites <- getNHDcomid(df = dplyr::select(sites, site, comid))
 }
@@ -70,14 +77,14 @@ if(site_type == "comid"){
 
 Make NHD-based watershed shapefiles for all CONUS sites. To make this step MUCH faster, it is best to have a locally downloaded version on the National NHD catchment shapefile stored on your local system. I have already included this shapefile in the `data` folder. 
 
-```{r}
+```{r watershed}
 site_watersheds <- getWatersheds(df = sites, make_pretty = TRUE) %>%
   inner_join(., select(sf::st_drop_geometry(sites), site, comid), by = "comid")
 ```
 
 Exporting shape files 
-```{r}
-st_write(site_watersheds, dsn = "shape/", layer = "RCSFA_shp", driver = "ESRI Shapefile")
+```{r shape}
+st_write(site_watersheds, dsn = "shape/", layer = "v4_RCSFA_shp", driver = "ESRI Shapefile")
 ```
 
 Map all your sites. Maps are automatically stored in the `data/maps/` folder. It is highly recommended to review each map, particularly for known locations along BIG rivers and TINY streams.Note: COMIDs should have been checked before running this code. 
@@ -88,7 +95,7 @@ suppressWarnings(map2(sites$site, sites$comid, getMaps))
 
 Interactive map showing all sites and their delineated watersheds:
 
-```{r}
+```{r mapview}
 mapview(site_watersheds, col.regions = "#56B4E9", alpha.regions = 0.2, lwd = 3, layer.name = "Watershed") +
   mapview(sites, cex = 5, col.regions = "black", layer.name = "Points") + 
   mapview(st_read('data/site_flowlines.gpkg', quiet = T), lwd = 3, color = "red", layer.name = "Flowline")
@@ -97,21 +104,47 @@ mapview(site_watersheds, col.regions = "#56B4E9", alpha.regions = 0.2, lwd = 3, 
 
 # StreamCat data extractions
 
-This `getStreamCat()` function is adapted from [Simon Topp's Lakecat extraction](https://github.com/SimonTopp/USLakeClarityTrendr/blob/master/1_nhd_join_and_munge.Rmd). StreamCat is *huge* (\~600 possible variables). And while EPA has since made an [API that interacts with StreamCat](https://www.epa.gov/national-aquatic-resource-surveys/streamcat-metrics-rest-api) (which would make this code 1 billion times faster), it wasn't public when this code was written. So! We made a function that:
-
-1)  Downloads StreamCat categories of data (e.g. dam density, urbanization, etc.) for all regions of CONUS.
-2)  Joins that data to our sites by their NHD COMID.
-3)  Then, hilariously, deletes (or not, depending on if you want to keep it) the large gigabytes of data we don't use and only keeps the data that matches our sites' NHD comids.
-
-To download the data that you want, be sure to update the `epa_categories` vector argument in `getStreamCat()` with the names of the categorized data sets you are interested in downloading. A list of those data sets can be found [here](https://gaftp.epa.gov/epadatacommons/ORD/NHDPlusLandscapeAttributes/StreamCat/HydroRegions/). Change `save = TRUE` to `save = FALSE` if you do not want to keep all CONUS-level StreamCat data that you downloaded.
-
+This section uses the R package [StreamCat Tools](https://github.com/USEPA/StreamCatTools?tab=readme-ov-file). Consult GitHub for information regarding package citation. 
 ```{r cat,echo = T, warning = FALSE, comment = F, message = FALSE, results='hide'}
-sites <- getStreamCat(sites = sites,
-                      # Choose EPA categories to download here. These example two categories took a few minutes to download. 
-                      epa_categories = c("AgMidHiSlopes", "CoalMines", "CanalDensity", "ImperviousSurfaces", "NLCD2019", "Dams","FirePerimeters","Kffact",'Elevation',"NADP","RefStreamTempPred","RoadDensity","RoadStreamCrossings","Runoff","STATSGO_Set1","STATSGO_Set2","USCensus2010","WWTP","GeoChemPhys3","Lithology"),
-                      save = FALSE)
+# install from GitHub the first time
+library(remotes)
+#install_github("USEPA/StreamCatTools", build_vignettes=FALSE)
+library(StreamCatTools)
 
-#NOTE: the getStreamCat is setup to extract ALL of the variables available on StreamCat, the user will have to modify the epa_categories function input to extract all the variables of interest. 
+# Get parameters available and subset the list of variables of interest
+params <- sc_get_params(param='name')
+# Land cover classes
+nlcd2019 = unique(params[grep('2019',params)])
+nlcd2019 = nlcd2019[3:length(nlcd2019)]
+# Fire related
+fire = unique(params[grep('pctburnareamtbs|pctlowsevmtbs|pctmodsevmtbs|pcthighsevmtbs',params)])
+
+# Extract data
+# need to add each metric manually
+df <- sc_get_data(metric ='bfi,elev,runoff,om,pctbl2019,pctconif2019,pctcrop2019,pctdecid2019,pctgrs2019,pcthay2019,pcthbwet2019,pctice2019,pctimp2019,pctimp2019slp10,pctimp2019slp20,pctmxfst2019,pctow2019,pctshrb2019,pcturbhi2019,pcturblo2019,pcturbmd2019,pcturbop2019,pctwdwet2019',
+aoi = 'cat,ws', comid = sites$comid,
+showAreaSqKm = TRUE, showPctFull = TRUE)
+
+df2 <- sc_get_data(metric ='pctburnareamtbs1984,pctburnareamtbs1985,pctburnareamtbs1986,pctburnareamtbs1987,pctburnareamtbs1988,pctburnareamtbs1989,pctburnareamtbs1990,pctburnareamtbs1991,pctburnareamtbs1992,pctburnareamtbs1993,pctburnareamtbs1994,pctburnareamtbs1995,pctburnareamtbs1996,pctburnareamtbs1997,pctburnareamtbs1998,pctburnareamtbs1999,pctburnareamtbs2000,pctburnareamtbs2001,pctburnareamtbs2002,pctburnareamtbs2003,pctburnareamtbs2004,pctburnareamtbs2005,pctburnareamtbs2006,pctburnareamtbs2007,pctburnareamtbs2008,pctburnareamtbs2009,pctburnareamtbs2010,pctburnareamtbs2011,pctburnareamtbs2012,pctburnareamtbs2013,pctburnareamtbs2014,pctburnareamtbs2015,pctburnareamtbs2016,pctburnareamtbs2017,pctburnareamtbs2018,pcthighsevmtbs1984,pcthighsevmtbs1985,pcthighsevmtbs1986,pcthighsevmtbs1987,pcthighsevmtbs1988,pcthighsevmtbs1989,pcthighsevmtbs1990,pcthighsevmtbs1991,pcthighsevmtbs1992,pcthighsevmtbs1993,pcthighsevmtbs1994,pcthighsevmtbs1995,pcthighsevmtbs1996,pcthighsevmtbs1997,pcthighsevmtbs1998,pcthighsevmtbs1999,pcthighsevmtbs2000,pcthighsevmtbs2001,pcthighsevmtbs2002,pcthighsevmtbs2003,pcthighsevmtbs2004,pcthighsevmtbs2005,pcthighsevmtbs2006,pcthighsevmtbs2007,pcthighsevmtbs2008,pcthighsevmtbs2009,pcthighsevmtbs2010,pcthighsevmtbs2011,pcthighsevmtbs2012,pcthighsevmtbs2013,pcthighsevmtbs2014,pcthighsevmtbs2015,pcthighsevmtbs2016,pcthighsevmtbs2017,pcthighsevmtbs2018,pctlowsevmtbs1984,pctlowsevmtbs1985,pctlowsevmtbs1986,pctlowsevmtbs1987,pctlowsevmtbs1988,pctlowsevmtbs1989,pctlowsevmtbs1990,pctlowsevmtbs1991,pctlowsevmtbs1992,pctlowsevmtbs1993,pctlowsevmtbs1994,pctlowsevmtbs1995,pctlowsevmtbs1996,pctlowsevmtbs1997,pctlowsevmtbs1998,pctlowsevmtbs1999,pctlowsevmtbs2000,pctlowsevmtbs2001,pctlowsevmtbs2002,pctlowsevmtbs2003,pctlowsevmtbs2004,pctlowsevmtbs2005,pctlowsevmtbs2006,pctlowsevmtbs2007,pctlowsevmtbs2008,pctlowsevmtbs2009,pctlowsevmtbs2010,pctlowsevmtbs2011,pctlowsevmtbs2012,pctlowsevmtbs2013,pctlowsevmtbs2014,pctlowsevmtbs2015,pctlowsevmtbs2016,pctlowsevmtbs2017,pctlowsevmtbs2018,pctmodsevmtbs1984,pctmodsevmtbs1985,pctmodsevmtbs1986,pctmodsevmtbs1987,pctmodsevmtbs1988,pctmodsevmtbs1989,pctmodsevmtbs1990,pctmodsevmtbs1991,pctmodsevmtbs1992,pctmodsevmtbs1993,pctmodsevmtbs1994,pctmodsevmtbs1995,pctmodsevmtbs1996,pctmodsevmtbs1997,pctmodsevmtbs1998,pctmodsevmtbs1999,pctmodsevmtbs2000,pctmodsevmtbs2001,pctmodsevmtbs2002,pctmodsevmtbs2003,pctmodsevmtbs2004,pctmodsevmtbs2005,pctmodsevmtbs2006,pctmodsevmtbs2007,pctmodsevmtbs2008,pctmodsevmtbs2009,pctmodsevmtbs2010,pctmodsevmtbs2011,pctmodsevmtbs2012,pctmodsevmtbs2013,pctmodsevmtbs2014,pctmodsevmtbs2015,pctmodsevmtbs2016,pctmodsevmtbs2017,pctmodsevmtbs2018',
+aoi = 'cat,ws', comid = sites$comid,
+showAreaSqKm = FALSE, showPctFull = FALSE)
+
+df3 = merge(df,df2, by = 'comid')
+
+df4 <- sc_get_data(metric = 'hydrlcond,mast2008,mast2009,mast2013,mast2014,
+pctfire2000,pctfire2001,pctfire2002,pctfire2003,pctfire2004,
+pctfire2005,pctfire2006,pctfire2007,pctfire2008,pctfire2009,pctfire2010,
+pctfrstloss2001,pctfrstloss2002,pctfrstloss2003,pctfrstloss2004,
+pctfrstloss2005,pctfrstloss2006,pctfrstloss2007,pctfrstloss2008,
+pctfrstloss2009,pctfrstloss2010,pctfrstloss2011,pctfrstloss2012,
+pctfrstloss2013,precip2008,precip2009,precip8110,precip9120,
+tmean2008,tmean2009,tmean8110,tmean9120,sand,clay',
+aoi = 'cat,ws', comid = sites$comid,
+showAreaSqKm = FALSE, showPctFull = FALSE)
+
+df5 = merge(df3,df4, by = 'comid')
+sites = merge(sites,df5, by = 'comid', all = T)
+
 
 ```
 
@@ -124,10 +157,10 @@ Lastly, we pull in additional data that is not found in StreamCat. This includes
 sites <- getAridity(df = sites, sf = site_watersheds)
 
 # Extract Omernik ecoregion for each site's location
-sites <- getOmernikSite(df = sites)
+#sites <- getOmernikSite(df = sites) #Can't Extract from the EPA link in the function anymore
 
 # Extract dominant Omernik ecoregion within each site's watershed
-sites <- getOmernikWs(df = sites, sf = site_watersheds)
+#sites <- getOmernikWs(df = sites, sf = site_watersheds)  #Can't Extract from the EPA link in the function anymore
 
 # Extract PRSIM ppt, tmean, tmax, and tmin data for each site's location
 sites <- getPRISM(df = sites)
@@ -141,9 +174,13 @@ sites <- getChemistry(df = sites, sf = site_watersheds)
 
 Export all the data.
 
-```{r}
+```{r export}
+final_df <- all_sites %>%
+  full_join(sites, by = "comid") %>%
+  mutate(site = coalesce(site.x, site.y)) %>%
+  select(site, everything(), -site.x, -site.y)
 
-write.csv(sites,paste0("Geospatial_data_",Sys.Date(),".csv"), row.names = F)
+write.csv(final_df,paste0("v4_RCSFA_Extracted_Geospatial_Data_",Sys.Date(),".csv"), row.names = F)
 
 ```
 

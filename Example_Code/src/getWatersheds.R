@@ -1,3 +1,6 @@
+# This function develops watersheds by aggregating all NHDPlusV2 catchments upstream of a site's location.
+# This function requires a site data table or shapefile that includes a site name and the site's associated COMID.
+
 getWatersheds <- function(df = sites, massive = TRUE, make_pretty = TRUE){
   
   # Read in the NHD. This is a table representing all flow direction data across CONUS.
@@ -17,7 +20,7 @@ getWatersheds <- function(df = sites, massive = TRUE, make_pretty = TRUE){
       
       upstream_nhd <- get_UT(nhd, outlet$comid) %>% #upstream trace function in nhdplusTools
         as_tibble() %>%
-        dplyr::rename(comid_list = value) %>%
+        rename(comid_list = value) %>%
         mutate(origin = outlet$comid)
       
     }
@@ -29,7 +32,7 @@ getWatersheds <- function(df = sites, massive = TRUE, make_pretty = TRUE){
     sf::st_drop_geometry() %>%
     dplyr::mutate(comid_list = map(site, watersheds)) %>%
     tidyr::unnest(., cols = comid_list) %>%
-    dplyr::select(origin,
+    select(origin,
            comid = comid_list) %>%
     distinct(.keep_all = TRUE)
   
@@ -54,14 +57,14 @@ getWatersheds <- function(df = sites, massive = TRUE, make_pretty = TRUE){
     # you can make the code faster by using the stored CONUS catchment polygons instead of the code below. 
     # Trade-off is polygons are not the most up-to-date since it uses a static, downloaded version.
     catchments <- readRDS('data/us_catchments.RDS') %>%
-      dplyr::rename(comid = FEATUREID) %>%
-      dplyr::filter(comid %in% upstream_list$comid)
+      rename(comid = FEATUREID) %>%
+      filter(comid %in% upstream_list$comid)
   }
   
   site_watersheds <- merge(catchments, upstream_list, by = 'comid', all.x = FALSE) %>%
     group_by(origin) %>%
-    dplyr::summarize() %>%
-    dplyr::rename(comid = origin) #%>%
+    summarize() %>%
+    rename(comid = origin) #%>%
     #mutate(comid = as.character(comid))
   
   # Here, an option to remove odd holes that form within the watershed that are due to 

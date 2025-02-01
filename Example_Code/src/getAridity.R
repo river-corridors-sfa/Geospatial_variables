@@ -15,7 +15,7 @@ point_aridity <- terra::extract(aridity, df, na.rm = TRUE, df = TRUE) %>%
   mutate(AriditySite = ai_et0/10000) %>%
   select(AriditySite)
 
-ws_aridity <- terra::extract(aridity, sf, mean, na.rm=T, df=TRUE) %>%
+ws_aridity <- terra::extract(aridity, sf, mean, na.rm=T) %>%
   select(ai_et0 = 2) %>%
   mutate(AridityWs = ai_et0/10000) %>%
   select(AridityWs)
