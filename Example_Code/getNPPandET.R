@@ -20,7 +20,7 @@ p_load(readr,
 # Required Datasets
 Net_Primary_Production <- "C:/Users/gara009/OneDrive - PNNL/Documents/GitHub/Geospatial_variables/Example_Code/KN_Data_R_Code/data_dir/CONUS2021_NPP_kgCm2.tif"
 Evapotranspiration <- "C:/Users/gara009/OneDrive - PNNL/Documents/GitHub/Geospatial_variables/Example_Code/KN_Data_R_Code/data_dir/CONUS2021_ET_kgm2year.tif"
-watershed_bnd <-"C:/Users/gara009/OneDrive - PNNL/Documents/GitHub/Geospatial_variables/Example_Code/shape/RCSFA.shp"
+watershed_bnd <-"C:/Users/gara009/OneDrive - PNNL/Documents/GitHub/Geospatial_variables/Example_Code/shape/v4_RCSFA.shp"
 
 
 getNPPandET <- function(NPP = Net_Primary_Production, 
@@ -66,8 +66,23 @@ getNPPandET <- function(NPP = Net_Primary_Production,
   
   bind_rows(watershed_list) -> watersheds
   
-  write.csv(watersheds,'C:/Users/gara009/OneDrive - PNNL/Documents/GitHub/Geospatial_variables/NPP_ET_RCSFA.csv',row.names = F)
+  write.csv(watersheds,paste0("v4_RCSFA_Extracted_NPP_ET_Data_",Sys.Date(),".csv"),row.names = F)
   #return(watersheds)
   
 }
 
+getNPPandET(NPP = Net_Primary_Production, 
+                  ET = Evapotranspiration, 
+                  watersheds = watershed_bnd)
+
+data = read.csv("v4_RCSFA_Extracted_NPP_ET_Data_2025-01-31.csv")
+sites <- read_csv("v4_RCSFA_Geospatial_Data_Package/v4_RCSFA_Geospatial_Site_Information.csv")
+sites = sites %>%
+  filter(COMID!=-9999) %>% dplyr::select(site = 'Site_ID', comid = 'COMID')
+
+final_df <- data %>%
+  full_join(sites, by = "comid") %>%
+  mutate(site = coalesce(site.x, site.y)) %>%
+  dplyr::select(site, everything(), -site.x, -site.y)
+
+write.csv(final_df,paste0("v4_RCSFA_Extracted_NPP_ET_Data_",Sys.Date(),".csv"), row.names = F)
