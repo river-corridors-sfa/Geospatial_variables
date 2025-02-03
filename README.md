@@ -10,7 +10,7 @@ Evapotranspiration came is a mosaic of data from [here](https://e4ftl01.cr.usgs.
 
 # Notes on the Data
 ## Please Read!
-The Geospatial data generated for the RC-SFA (see v2_RCSFA_Extracted_Geospatial_Data_2023-06-21.csv), has been generated using v2 of the RC-SFA Geospatial Data Package on ESS-DIVE located [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251). The data package was downloaded on 06-20-2023 and data was generated on 06-21-2023. This file contains Geospatial information for all the RC-SFA sites in the United States and needs to be filtered by the user based on study of interest. If your site of interest is not present in the output it could be because:        
+The Geospatial data generated for the RC-SFA (see v4_RCSFA_Extracted_Geospatial_Data_2025-01-31.csv), has been generated using v4 of the RC-SFA Geospatial Data Package on ESS-DIVE located [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251). The data package was downloaded on 01-29-2025 and data was generated on 01-31-2053. Note that the Geospatial data was not updated for the v3 release of the data package. This file contains Geospatial information for all the RC-SFA sites in the United States and needs to be filtered by the user based on study of interest. If your site of interest is not present in the output it could be because:        
 
 1- It is not in the United States.      
 2- It is a small stream and does not have COMID associated with it. See ESS-DIVE data package [here](https://data.ess-dive.lbl.gov/view/doi:10.15485/1971251).    
