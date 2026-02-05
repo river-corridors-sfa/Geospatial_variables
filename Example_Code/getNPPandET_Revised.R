@@ -8,15 +8,15 @@ p_load(
 
 Net_Primary_Production <- "C:/Users/gara009/OneDrive - PNNL/Documents/GitHub/Geospatial_variables/Example_Code/KN_Data_R_Code/data_dir/CONUS2021_NPP_kgCm2.tif"
 Evapotranspiration     <- "C:/Users/gara009/OneDrive - PNNL/Documents/GitHub/Geospatial_variables/Example_Code/KN_Data_R_Code/data_dir/CONUS2021_ET_kgm2year.tif"
-watershed_bnd          <- "C:/Users/gara009/OneDrive - PNNL/Documents/GitHub/Geospatial_variables/Example_Code/shape/v4_RCSFA.shp"
-sites_csv              <- "v4_RCSFA_Geospatial_Data_Package/v4_RCSFA_Geospatial_Site_Information.csv"
+watershed_bnd          <- "C:/Users/gara009/OneDrive - PNNL/Documents/GitHub/Geospatial_variables/Example_Code/shape/v5_RCSFA.shp"
+sites_csv              <- "v5_RCSFA_Geospatial_Data_Package/v5_RCSFA_Geospatial_Site_Information.csv"
 
 getNPPandET <- function(
     NPP = Net_Primary_Production,
     ET  = Evapotranspiration,
     watersheds = watershed_bnd,
     compute_totals = TRUE,
-    out_csv = paste0("v4_RCSFA_Extracted_NPP_ET_Correct_", Sys.Date(), ".csv")
+    out_csv = paste0("54_RCSFA_Extracted_NPP_ET_Correct_", Sys.Date(), ".csv")
 ) {
   
   fire_wtrshd <- st_read(watersheds, quiet = TRUE)
@@ -98,7 +98,7 @@ final_df <- data %>%
   mutate(site = coalesce(site.x, site.y)) %>%
   dplyr::select(site, everything(), -site.x, -site.y)
 
-write.csv(final_df, paste0("v4_RCSFA_Extracted_NPP_ET_Correct_", Sys.Date(), ".csv"), row.names = FALSE)
+write.csv(final_df, paste0("v5_RCSFA_Extracted_NPP_ET_Correct_", Sys.Date(), ".csv"), row.names = FALSE)
 
 cat("NPP mean range (kgC/m2/yr): ", range(final_df$NPP_mean_kgC_m2_yr, na.rm=TRUE), "\n")
 cat("ET mean range (kg/m2/yr):   ", range(final_df$ET_mean_kg_m2_yr,   na.rm=TRUE), "\n")

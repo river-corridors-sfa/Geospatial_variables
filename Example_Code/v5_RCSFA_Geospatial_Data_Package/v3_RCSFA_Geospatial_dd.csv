@@ -1,0 +1,33 @@
+Column_or_Row_Name,Unit,Definition,Data_Type,Term_Type,Missing_Value_Code,Reported_Precision
+Column_or_Row_Name,N/A,Column or row headers from each tabular file (csv or tsv) in the dataset.,text,column_header,N/A,-9999
+Column_or_Row_Name_Position,N/A,"The location of the column or row that contains the header names (i.e., column name or row name). The count used to identify the location assumes the numbering begins at 1 (rather than 0) and excludes columns or rows that begin with ""#"". Most data in this data package is oriented in columns, so this field indicates the tabular location of the row that holds the column names (e.g., If row 1 has the column headers, row 2 has the units, and row 3 has the data values, then this value would be 1 - to indicate the location of the column header row).",numeric,column_header,-9999,1
+COMID,N/A,NHDPlus version 2 common identifier (COMID). The COMID can be used to extract geospatial variables from various sources. ,numeric,column_header,-9999,1
+Country,N/A,Country where sample was collected.,text,column_header,N/A,-9999
+Data_Type,N/A,Type of data (numeric; text; date; time; datetime).,text,column_header,N/A,-9999
+Definition,N/A,Description of the information in a given column or row in the dataset.,text,column_header,N/A,-9999
+Description,N/A,"Description of location. This column contains the information submitted during International Generic Sample Number (IGSN) registration under the name ""Physiographic Feature."" ",text,column_header,N/A,-9999
+File_Description,N/A,A brief description of the files in the data package.,text,column_header,N/A,-9999
+File_Name,N/A,Name of files in the data package.,text,column_header,N/A,-9999
+File_Path,N/A,File path within the data package.,text,column_header,N/A,-9999
+Header_Rows,N/A,"The number of rows or the number of columns that occur before the start of tabular data. This count assumes the numbering begins at 1 (rather than 0), excludes columns or rows that begin with ""#"", and includes the column or row that the header names are on. For example, if the file has columns with variable names but does not have any other metadata header rows, then this value is 1. Most data in this data package is oriented in columns, so this field indicates the number of rows before the start of the data (e.g., If row 1 has the column headers, row 2 has the units, and row 3 has the data values, then this value would be 2 - to indicate the count of the rows prior to the data values).",numeric,column_header,-9999,1
+IGSN,N/A,International Generic Sample Numbers (IGSNs) registered with System for Earth Sample Registration (SESAR; https://www.geosamples.org/about/services#igsnregistration).,text,column_header,N/A,-9999
+Latitude,decimal_degrees_WGS1984,Geographic location (latitude) of site.,numeric,column_header,-9999,0.000001
+Longitude,decimal_degrees_WGS1984,Geographic location (longitude) of site.,numeric,column_header,-9999,0.000001
+Method_Description,N/A,Description of method code.,text,column_header,N/A,-9999
+Method_ID,N/A,Alphanumeric ID associated with method code.,text,column_header,N/A,-9999
+Method_Instrument,N/A,Instrument used in method code.,text,column_header,N/A,-9999
+Method_Lab,N/A,Laboratory in which methods were completed.,text,column_header,N/A,-9999
+Method_Name,N/A,Name of method code category.,text,column_header,N/A,-9999
+Method_Type,N/A,Type of method.,text,column_header,N/A,-9999
+Methods_and_Flags,N/A,Alphanumeric codes indicating the methods used or a data flag. ,text,column_header,N/A,-9999
+Missing_Value_Code,N/A,"Cells with missing data are represented with a missing value code rather than an empty cell. This column describes which missing value codes were used. In most cases, the missing value code for numeric data is ""-9999"" and for character data is ""N/A"".",text,column_header,N/A,-9999
+Origin_Study_Code,N/A,Indicator of study that site was originally created for. ,text,column_header,N/A,-9999
+Physiographic_Feature_Name,N/A,Name of the physiographic feature (stream).,text,column_header,N/A,-9999
+RawCOMID_Used,N/A,"Indication of whether the raw COMID was correct and used (with a TRUE flag) or if the raw COMID was incorrect and manually rectified (with a FALSE flag). The raw COMID refers to the COMID assigned by the nearest-neighbor spatial join. If the raw COMID was not used and had to be rectified; a flag with the raw COMID was added to the ""Methods_and_Flags"" column.",text,column_header,N/A,-9999
+Reported_Precision,N/A,"Precision of the reported data values. For example, if the values are rounded to 1 decimal place, the precision would be 0.1. Similarly, if a value like 5.24 is reported (rounded to 2 decimal places), its precision would be 0.01.",numeric,column_header,N/A,-9999
+Site_ID,N/A,Site ID.,text,column_header,N/A,-9999
+Standard,N/A,ESS-DIVE Reporting Format (https://ess-dive.lbl.gov/data-reporting-formats/) or other standard applied to the data file.,text,column_header,N/A,-9999
+Submission_Contact_Email,N/A,Email of submission contact.,text,column_header,N/A,-9999
+Submission_Contact_Name,N/A,Name of submission contact.,text,column_header,N/A,-9999
+Term_Type,N/A,"Indicates how the term is used in the data package (e.g., a column_header, row_header, data_flag, or other variable).",text,column_header,N/A,-9999
+Unit,N/A,Unit of measurement that applies to a given column or row in the data package.,text,column_header,N/A,-9999

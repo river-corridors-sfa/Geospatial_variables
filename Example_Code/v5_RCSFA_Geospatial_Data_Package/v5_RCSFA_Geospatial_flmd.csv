@@ -1,0 +1,9 @@
+File_Name,File_Description,Standard,Header_Rows,Column_or_Row_Name_Position,File_Path
+v5_readme_RCSFA_Geospatial.pdf,Data package level readme. Contains data package summary; acknowledgements; and contact information.,N/A,-9999,-9999,/v5_RCSFA_Geospatial_Data_Package
+v5_RCSFA_Geospatial_flmd.csv,File-level metadata that lists and describes all of the files contained in the data package.,ESS-DIVE FLMD v1; ESS-DIVE CSV v1,1,1,/v5_RCSFA_Geospatial_Data_Package
+v3_RCSFA_Geospatial_dd.csv,"Data dictionary that defines column and row headers across all tabular data files (files ending in "".csv"" or "".tsv"") in the data package.",ESS-DIVE FLMD v1; ESS-DIVE CSV v1,1,1,/v5_RCSFA_Geospatial_Data_Package
+v3_RCSFA_Geospatial_Methods_Codes.csv,Definitions of methods codes and flags used in v*_RCSFA_Geospatial_Site_Information.csv,ESS-DIVE CSV v1,1,1,/v5_RCSFA_Geospatial_Data_Package
+v5_RCSFA_Geospatial_Site_Information.csv,Information and metadata associated with  River Corridor Science Focus Area (RC-SFA) sites including the NHDPlus (Version 2) common identifier (COMID). The COMID can be used to extract geospatial variables from various sources.,ESS-DIVE CSV v1; ESS-DIVE Sample v1,1,1,/v5_RCSFA_Geospatial_Data_Package
+v5_RCSFA_Geospatial_Sites_Global_Map.pdf,Map of River Corridor Science Focus Area (RC-SFA) global sites.,N/A,-9999,-9999,/v5_RCSFA_Geospatial_Data_Package
+v5_RCSFA_Geospatial_Sites_Washington_Map.pdf,Map of River Corridor Science Focus Area (RC-SFA) sites in Washington State.,N/A,-9999,-9999,/v5_RCSFA_Geospatial_Data_Package
+v5_RCSFA_Geospatial_Sites_Shapefile.*,Shapefile for River Corridor Science Focus Area (RC-SFA) sites. Asterisk indicates file extension. ,N/A,-9999,-9999,/v5_RCSFA_Geospatial_Data_Package/v5_RCSFA_Geospatial_Sites_Shapefile

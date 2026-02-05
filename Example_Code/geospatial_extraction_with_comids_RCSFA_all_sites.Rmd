@@ -51,7 +51,7 @@ Use COMID to allow site linkages with all datasets in this workflow.
 ```{r load}
 sf_use_s2(FALSE)
 site_type = "comid" # This steps assumes you have checked your COMIDs
-sites <- read_csv("v4_RCSFA_Geospatial_Data_Package/v4_RCSFA_Geospatial_Site_Information.csv")
+sites <- read_csv("v5_RCSFA_Geospatial_Data_Package/v5_RCSFA_Geospatial_Site_Information.csv")
 
 # Filter the sites that are too small to have COMIDS or are outside of the US. Also select and change column names to match the code needs
 
@@ -84,13 +84,13 @@ site_watersheds <- getWatersheds(df = sites, make_pretty = TRUE) %>%
 
 Exporting shape files 
 ```{r shape}
-st_write(site_watersheds, dsn = "shape/", layer = "v4_RCSFA_shp", driver = "ESRI Shapefile")
+st_write(site_watersheds, dsn = "shape/", layer = "v5_RCSFA_shp", driver = "ESRI Shapefile")
 ```
 
 Map all your sites. Maps are automatically stored in the `data/maps/` folder. It is highly recommended to review each map, particularly for known locations along BIG rivers and TINY streams.Note: COMIDs should have been checked before running this code. 
 
 ```{r map2,echo = T, warning = FALSE, comment = F, message = FALSE, results='hide'}
-suppressWarnings(map2(sites$site, sites$comid, getMaps)) 
+#suppressWarnings(map2(sites$site, sites$comid, getMaps)) 
 ```
 
 Interactive map showing all sites and their delineated watersheds:
@@ -180,7 +180,7 @@ final_df <- all_sites %>%
   mutate(site = coalesce(site.x, site.y)) %>%
   select(site, everything(), -site.x, -site.y)
 
-write.csv(final_df,paste0("v4_RCSFA_Extracted_Geospatial_Data_",Sys.Date(),".csv"), row.names = F)
+write.csv(final_df,paste0("v5_RCSFA_Extracted_Geospatial_Data_",Sys.Date(),".csv"), row.names = F)
 
 ```
 
